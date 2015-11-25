@@ -14,21 +14,28 @@
            android:id="@+id/server_ip"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="hihi"
+           android:text=""
            />
 
     <Button
         android:id="@+id/connect_phones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/server_ip"
         android:text="Send"
-        />
+        android:layout_below="@+id/server_ip"
+        android:layout_toLeftOf="@+id/scan_button"
+        android:layout_toStartOf="@+id/scan_button"
+        android:layout_marginRight="57dp"
+        android:layout_marginEnd="57dp" />
 
     <Button android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/scan" />
+        android:text="@string/scan"
+        android:layout_below="@+id/server_ip"
+        android:layout_alignRight="@+id/server_ip"
+        android:layout_alignEnd="@+id/server_ip"
+        android:layout_marginRight="59dp"
+        android:layout_marginEnd="59dp" />
 
 </RelativeLayout>

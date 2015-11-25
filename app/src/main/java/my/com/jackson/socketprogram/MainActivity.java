@@ -23,7 +23,6 @@ public class MainActivity extends Activity {
     private String messages = "";
     private String contantsString;
     private boolean connected = false;
-    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,16 +80,24 @@ public class MainActivity extends Activity {
             // handle scan result
             contantsString =  scanResult.getContents()==null?"0":scanResult.getContents();
             if (contantsString.equalsIgnoreCase("0")) {
-                Toast.makeText(this, "Problem to get the  contant Number", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Problem to get the barcode number", Toast.LENGTH_LONG).show();
 
             }else {
                 Toast.makeText(this, contantsString, Toast.LENGTH_LONG).show();
+                serverIp.setText(contantsString);
+                try {
+                    Toast.makeText(getApplicationContext() ,"Connect",Toast.LENGTH_SHORT).show();
+                    udp_send(contantsString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
             }
 
         }
         else{
-            Toast.makeText(this, "Problem to secan the barcode.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Problem to scan the barcode.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -105,42 +112,4 @@ public class MainActivity extends Activity {
         DatagramPacket p = new DatagramPacket(message, msg_length,local,server_port);
         s.send(p);
     }
-
-    public class ClientThread implements Runnable {
-        public void run() {
-            try {
-                InetAddress serverAddr =
-                        InetAddress.getByName(serverIpAddress);
-                Log.d("ClientActivity", "C: Connecting...");
-                Socket socket = new Socket(serverAddr, 10000);
-                connected = true;
-                while (connected) {
-                    try {
-                        Log.d("ClientActivity", "C: Sending command.");
-                        PrintWriter out =
-                                new PrintWriter(
-                                        new BufferedWriter(
-                                                new OutputStreamWriter(
-                                                        socket.getOutputStream())),
-                                        true);
-
-                        // where you issue the commands
-                        out.println("Hey Server!");
-                        Log.d("ClientActivity", "C: Sent.");
-                    } catch (Exception e) {
-                        Log.e("ClientActivity", "S: Error", e);
-                    }
-                }
-                socket.close();
-                Log.d("ClientActivity", "C: Closed.");
-            } catch (Exception e) {
-                Log.e("ClientActivity", "C: Error", e);
-                connected = false;
-            }
-        }
-    }
-
-    ;
-
-
 }
