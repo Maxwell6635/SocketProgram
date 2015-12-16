@@ -1,18 +1,19 @@
 package my.com.jackson.socketprogram;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import java.io.*;
-import java.net.*;
-
 import android.app.Activity;
-import android.os.*;
-import android.util.*;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 
 public class MainActivity extends Activity {
@@ -24,10 +25,12 @@ public class MainActivity extends Activity {
     private String contantsString;
     private boolean connected = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         serverIp = (EditText) findViewById(R.id.server_ip);
         connectPhones = (Button) findViewById(R.id.connect_phones);
@@ -38,18 +41,6 @@ public class MainActivity extends Activity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        btnScanBarCode.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.initiateScan();
-
-
-
-            }
-        });
 
         connectPhones.setOnClickListener(new OnClickListener() {
             @Override
@@ -68,6 +59,7 @@ public class MainActivity extends Activity {
             }
         });
     }
+
 
 
     @Override
@@ -101,6 +93,11 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void launchBarcodeActivity(View v) {
+        Intent intent = new Intent(this, BarcodeActivity.class);
+        startActivity(intent);
+    }
+
     private void udp_send(String  messages) throws IOException
     {
         String messageStr= messages;
@@ -112,4 +109,5 @@ public class MainActivity extends Activity {
         DatagramPacket p = new DatagramPacket(message, msg_length,local,server_port);
         s.send(p);
     }
+
 }
