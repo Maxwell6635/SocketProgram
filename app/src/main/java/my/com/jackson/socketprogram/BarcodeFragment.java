@@ -20,7 +20,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class BarcodeFragment extends Fragment implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView mScannerView;
-    private String serverIpAddress = "192.168.0.10";
+    private String serverIpAddress = "172.16.132.248";
     private String messages = "";
     private String contantsString;
     private boolean connected = false;
@@ -41,12 +41,11 @@ public class BarcodeFragment extends Fragment implements ZXingScannerView.Result
 
     @Override
     public void handleResult(Result rawResult) {
-        Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
-                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
+//                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
         contantsString = rawResult.getText();
         if (contantsString.equalsIgnoreCase("0")) {
             Toast.makeText(getContext(), "Problem to get the barcode number", Toast.LENGTH_LONG).show();
-
         }else {
             Toast.makeText(getContext(), contantsString, Toast.LENGTH_LONG).show();
             try {
@@ -67,7 +66,7 @@ public class BarcodeFragment extends Fragment implements ZXingScannerView.Result
         mScannerView.stopCamera();
     }
 
-    private void udp_send(String  messages) throws IOException
+    private void udp_send(String messages) throws IOException
     {
         String messageStr= messages;
         int server_port = 10000;

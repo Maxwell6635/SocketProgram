@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 
     private EditText serverIp;
     private Button connectPhones , btnScanBarCode;
-    private String serverIpAddress = "192.168.0.10";
+    private String serverIpAddress = "172.16.134.248";
     private String messages = "";
     private String contantsString;
     private boolean connected = false;
@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
                             Toast.makeText(getApplicationContext() ,"Connect",Toast.LENGTH_SHORT).show();
                             udp_send(messages);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            System.out.println(e.toString());
                         }
                     }
                 }
@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
                     Toast.makeText(getApplicationContext() ,"Connect",Toast.LENGTH_SHORT).show();
                     udp_send(contantsString);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(e.toString());
                 }
 
 
